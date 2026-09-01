@@ -4,10 +4,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { JSONContent } from "@tiptap/core";
 import { EditorContent, useEditor } from "@tiptap/react";
 import Link from "next/link";
-import { ArrowLeft, Share2 } from "lucide-react";
+import { ArrowLeft, History, MessageSquare, Share2 } from "lucide-react";
 import { toast } from "sonner";
+import { CommentsPanel } from "@/components/editor/comments-panel";
 import { EditorToolbar } from "@/components/editor/editor-toolbar";
 import { ShareDialog } from "@/components/editor/share-dialog";
+import { VersionHistoryPanel } from "@/components/editor/version-history-panel";
 import {
   SaveIndicator,
   type SaveStatus,
@@ -29,6 +31,8 @@ type DocumentEditorProps = {
   initialContent: JSONContent;
   canWrite: boolean;
   canShare: boolean;
+  currentUserId: string;
+  documentOwnerId: string;
   accessLabel?: "Owner" | "Editor" | "Viewer";
 };
 
@@ -50,12 +54,16 @@ export function DocumentEditor({
   initialContent,
   canWrite,
   canShare,
+  currentUserId,
+  documentOwnerId,
   accessLabel,
 }: DocumentEditorProps) {
   const [title, setTitle] = useState(initialTitle);
   const [saveStatus, setSaveStatus] = useState<SaveStatus>("idle");
   const [importOpen, setImportOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
+  const [commentsOpen, setCommentsOpen] = useState(false);
+  const [historyOpen, setHistoryOpen] = useState(false);
   const contentTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const titleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const latestContentRef = useRef<JSONContent>(initialContent);
@@ -151,6 +159,17 @@ export function DocumentEditor({
     [editor, persist],
   );
 
+  const handleRestoredVersion = useCallback(
+    (document: { title: string; content: JSONContent }) => {
+      setTitle(document.title);
+      editor?.commands.setContent(document.content);
+      latestContentRef.current = document.content;
+      latestTitleRef.current = document.title;
+      void persist({ title: document.title, content: document.content });
+    },
+    [editor, persist],
+  );
+
   return (
     <div className="bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/[0.04] via-background to-background pb-16">
       <div className="sticky top-14 z-40 border-b border-border/60 bg-card/85 backdrop-blur-md">
@@ -202,6 +221,26 @@ export function DocumentEditor({
                   Share
                 </Button>
               ) : null}
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="gap-2"
+                onClick={() => setCommentsOpen(true)}
+              >
+                <MessageSquare className="size-4" />
+                Comments
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="gap-2"
+                onClick={() => setHistoryOpen(true)}
+              >
+                <History className="size-4" />
+                History
+              </Button>
             </div>
           </div>
           <EditorToolbar
@@ -219,6 +258,23 @@ export function DocumentEditor({
           onOpenChange={setShareOpen}
         />
       ) : null}
+
+      <CommentsPanel
+        documentId={documentId}
+        open={commentsOpen}
+        onOpenChange={setCommentsOpen}
+        editor={editor}
+        currentUserId={currentUserId}
+        documentOwnerId={documentOwnerId}
+      />
+
+      <VersionHistoryPanel
+        documentId={documentId}
+        open={historyOpen}
+        onOpenChange={setHistoryOpen}
+        canWrite={canWrite}
+        onRestore={handleRestoredVersion}
+      />
 
       {canWrite ? (
         <ImportFileDialog

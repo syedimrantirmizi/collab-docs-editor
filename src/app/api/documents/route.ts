@@ -4,7 +4,7 @@ import { createDocumentForUser } from "@/lib/documents";
 import { getDashboardDocuments } from "@/lib/queries/documents";
 import { createDocumentSchema } from "@/lib/validators";
 
-export async function GET() {
+export async function GET(request: Request) {
   const session = await auth();
 
   if (!session?.user?.id) {
@@ -14,9 +14,11 @@ export async function GET() {
     );
   }
 
-  const { owned, shared } = await getDashboardDocuments(session.user.id);
+  const { searchParams } = new URL(request.url);
+  const query = searchParams.get("q");
+  const { owned, shared } = await getDashboardDocuments(session.user.id, query);
 
-  return NextResponse.json({ owned, shared });
+  return NextResponse.json({ owned, shared, query: query?.trim() || null });
 }
 
 export async function POST(request: Request) {

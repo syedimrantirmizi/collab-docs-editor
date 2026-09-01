@@ -53,6 +53,8 @@ export default async function DocPage({ params }: DocPageProps) {
         initialContent={document.content as JSONContent}
         canWrite={canWrite(session.user.id, document)}
         canShare={canShare(session.user.id, document)}
+        currentUserId={session.user.id}
+        documentOwnerId={document.ownerId}
         accessLabel={accessLabel}
       />
     </>

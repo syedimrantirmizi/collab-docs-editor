@@ -16,6 +16,12 @@ export const shareDocumentSchema = z.object({
   role: z.enum(["VIEWER", "EDITOR"]),
 });
 
+export const createCommentSchema = z.object({
+  body: z.string().trim().min(1, "Comment cannot be empty").max(2000),
+  excerpt: z.string().trim().max(500).optional(),
+});
+
 export type ImportMode = z.infer<typeof importModeSchema>;
 export type ShareDocumentInput = z.infer<typeof shareDocumentSchema>;
+export type CreateCommentInput = z.infer<typeof createCommentSchema>;
 export type UpdateDocumentInput = z.infer<typeof updateDocumentSchema>;

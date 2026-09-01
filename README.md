@@ -76,6 +76,14 @@ Open [http://localhost:3000](http://localhost:3000)
 
 Max file size: **5 MB**
 
+## Collaboration extras
+
+| Feature | Description |
+|---------|-------------|
+| **Comments** | Sidebar on any open document; quote selected text; owners and collaborators can discuss |
+| **Version history** | Auto-snapshots before each save; preview and restore previous versions |
+| **Document search** | Dashboard search filters owned and shared documents by title |
+
 ## Testing
 
 Requires local Postgres with migrations and seed applied.

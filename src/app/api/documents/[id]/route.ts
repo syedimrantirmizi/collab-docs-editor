@@ -7,6 +7,7 @@ import {
   getReadableDocument,
   getWritableDocument,
 } from "@/lib/documents";
+import { snapshotDocumentBeforeUpdate } from "@/lib/revisions";
 import { updateDocumentSchema } from "@/lib/validators";
 
 type RouteContext = {
@@ -82,6 +83,13 @@ export async function PATCH(request: Request, context: RouteContext) {
       { status: 400 },
     );
   }
+
+  await snapshotDocumentBeforeUpdate(
+    document,
+    session.user.id,
+    parsed.data.title,
+    parsed.data.content as Prisma.InputJsonValue | undefined,
+  );
 
   const updated = await prisma.document.update({
     where: { id },
