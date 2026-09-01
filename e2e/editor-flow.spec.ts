@@ -12,8 +12,13 @@ test.describe("core editor flow", () => {
     await page.getByRole("button", { name: "Continue to workspace" }).click();
 
     await expect(page).toHaveURL("/dashboard");
-    await page.getByRole("button", { name: "New document" }).click();
-    await expect(page).toHaveURL(/\/doc\/.+/);
+    await Promise.all([
+      page.waitForURL(/\/doc\/.+/, { timeout: 15_000 }),
+      page
+        .getByTestId("create-document-form")
+        .getByRole("button", { name: "New document" })
+        .click(),
+    ]);
 
     const editor = page.locator(".tiptap");
     await editor.click();

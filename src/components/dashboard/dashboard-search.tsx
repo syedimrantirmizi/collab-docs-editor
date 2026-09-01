@@ -16,6 +16,13 @@ export function DashboardSearch({ initialQuery = "" }: DashboardSearchProps) {
   useEffect(() => {
     const timer = window.setTimeout(() => {
       const trimmed = query.trim();
+      const currentParams = new URLSearchParams(window.location.search);
+      const currentQuery = currentParams.get("q") ?? "";
+
+      if (trimmed === currentQuery) {
+        return;
+      }
+
       const params = new URLSearchParams();
 
       if (trimmed) {

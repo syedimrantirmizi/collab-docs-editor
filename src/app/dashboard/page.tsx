@@ -43,7 +43,7 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <form action={createDocumentAction}>
+            <form action={createDocumentAction} data-testid="create-document-form">
               <Button type="submit" className="gap-2 shadow-sm">
                 <FilePlus className="size-4" />
                 New document
