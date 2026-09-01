@@ -1,4 +1,4 @@
-﻿-- CreateEnum
+-- CreateEnum
 CREATE TYPE "ShareRole" AS ENUM ('VIEWER', 'EDITOR');
 
 -- CreateTable
