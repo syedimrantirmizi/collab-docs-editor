@@ -14,6 +14,8 @@ This applies to **every phase** and **every feature**.
 | Import via CLI (`shadcn add`, `npx create-next-app`, Prisma init) | Reinvent layout, buttons, dialogs, or form patterns |
 | Copy official docs/examples and **edit** to fit Ajaia Docs | Generate large greenfield files from AI without a source URL |
 | Use starter repos / blocks / UI kits as starting points | Custom CSS component library from zero |
+| Import **polished, product-grade** blocks (shadcn blocks, 21st.dev) | Ship bare minimum components that look like a mock |
+| Theme imports to Ajaia tokens without removing polish | Strip styling down to “good enough for logic demo” |
 | Document every source in `Sources.md` before merge | Ship code with unknown or untracked origins |
 
 **"From scratch" is allowed only for:**

@@ -18,6 +18,7 @@ Estimated effort assumes one developer with AI assistance; adjust if pairing or 
 
 - [ ] All imports logged in **`Sources.md`**
 - [ ] No scratch-built UI/editor/auth (see **`ImportFirst.md`**)
+- [ ] **Visual QA passed** — UI looks like a real product, not a mock (`Design.md` §1.1, §14)
 
 ---
 

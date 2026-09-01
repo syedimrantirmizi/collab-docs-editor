@@ -1,36 +1,144 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ajaia Docs
 
-## Getting Started
+Lightweight collaborative document editor (Google Docs–inspired MVP).
 
-First, run the development server:
+**MVP complete (Phases 0–5):** Auth, TipTap editor, dashboard, import, sharing, tests, and deployment docs.
+
+## Prerequisites
+
+- Node.js 20+
+- PostgreSQL locally (Docker recommended) or native PostgreSQL 16+
+
+## Quick start
+
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Start PostgreSQL
+
+**Option A — Docker (recommended)**
+
+```bash
+docker compose up -d
+```
+
+Uses credentials from `.env.example`: `ajaia` / `ajaia`.
+
+**Option B — Native PostgreSQL**
+
+Install PostgreSQL 16+, create database `ajaia_docs`, and set `DATABASE_URL` in `.env` to match your local user/password.
+
+### 3. Environment
+
+```bash
+cp .env.example .env
+```
+
+Generate a production `AUTH_SECRET`:
+
+```bash
+openssl rand -hex 32
+```
+
+### 4. Database setup
+
+```bash
+npm run db:migrate
+npm run db:seed
+```
+
+### 5. Run the app
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Demo accounts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Email | Password |
+|-------|----------|
+| `alice@ajaia.test` | `password123` |
+| `bob@ajaia.test` | `password123` |
+| `charlie@ajaia.test` | `password123` |
 
-## Learn More
+## Supported import formats
 
-To learn more about Next.js, take a look at the following resources:
+| Format | Notes |
+|--------|--------|
+| `.txt` | Plain text → paragraphs |
+| `.md` | Markdown → rich text |
+| `.docx` | Text extraction (layout not preserved) |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Max file size: **5 MB**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Testing
 
-## Deploy on Vercel
+Requires local Postgres with migrations and seed applied.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run test          # Vitest — permissions matrix
+npm run test:e2e      # Playwright — login → edit → save → reload
+npm run test:e2e:ui   # Playwright interactive UI
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+CI runs both suites on push (see `.github/workflows/ci.yml`).
+
+## Production
+
+Deployment uses a **neutral GitHub repo name** (not “ajaia”), **Vercel**, and **Neon Postgres**.
+
+Full step-by-step: **[docs/DEPLOYMENT.md](./docs/DEPLOYMENT.md)**
+
+Recommended repo name: `collab-docs-editor`
+
+After deploy, add your live URL here:
+
+- **URL:** _(set after Vercel deploy)_
+- **Repo:** [github.com/syedimrantirmizi/collab-docs-editor](https://github.com/syedimrantirmizi/collab-docs-editor)
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start dev server |
+| `npm run build` | Production build (local) |
+| `npm run test` | Unit tests |
+| `npm run test:e2e` | End-to-end tests |
+| `npm run db:migrate` | Apply Prisma migrations (dev) |
+| `npm run db:migrate:deploy` | Apply migrations (production) |
+| `npm run db:seed` | Seed demo users |
+| `npm run db:studio` | Open Prisma Studio |
+
+## Reviewer docs
+
+| Doc | Purpose |
+|-----|---------|
+| [ARCHITECTURE_NOTE.md](./ARCHITECTURE_NOTE.md) | Priorities and tradeoffs |
+| [AI_WORKFLOW.md](./AI_WORKFLOW.md) | How the MVP was built with AI |
+| [docs/DEPLOYMENT.md](./docs/DEPLOYMENT.md) | GitHub → Vercel → Neon guide |
+
+## Project documentation
+
+Planning docs live in [`docs/`](./docs/):
+
+- [Decisions.md](./docs/Decisions.md) — approved product choices
+- [ImportFirst.md](./docs/ImportFirst.md) — import-first development rule
+- [Sources.md](./docs/Sources.md) — imported component registry
+- [Phases.md](./docs/Phases.md) — implementation phases
+
+## Stack
+
+Next.js 16 · TypeScript · Tailwind · shadcn/ui · NextAuth v5 · Prisma 6 · PostgreSQL · TipTap 3
+
+## Import-first
+
+UI and auth patterns are imported from official sources (shadcn blocks, Next.js learn auth guide). See `docs/Sources.md` for provenance.
+
+## Design quality
+
+All screens must look like a **real, shippable product** — not a mock or wireframe. See [`docs/Design.md`](./docs/Design.md) §1.1.

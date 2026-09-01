@@ -178,6 +178,7 @@ Teams need a simple place to draft and share documents without heavy setup. Exis
 | Deployment | Public demo URL (Vercel + managed DB) |
 | Testing | ≥1 integration or E2E test covering create → save → reload |
 | **Import-first (MUST)** | No scratch-built UI/editor/auth; web research → import → adapt; log sources in `Sources.md` (see `ImportFirst.md`) |
+| **Visual quality (MUST)** | Product-grade, beautiful UI — polished surfaces, hierarchy, empty states; not mock/wireframe (`Design.md` §1.1) |
 
 ---
 
@@ -192,6 +193,7 @@ Teams need a simple place to draft and share documents without heavy setup. Exis
 - [ ] One automated test passes in CI or locally
 - [ ] Architecture / AI workflow notes included
 - [ ] `Sources.md` documents imported components and templates (import-first compliance)
+- [ ] UI looks like a **shippable product** (not a mock) per `Design.md` Visual QA
 
 ---
 
@@ -207,6 +209,7 @@ All former open questions are **resolved**. See **`Decisions.md`** for the full 
 | File import | New document **and** import into current open document |
 | Design | Light mode, teal accent, card dashboard |
 | Typography | Sans UI (Inter) + serif editor |
+| **Visual quality** | Product-grade, beautiful UI — not mock/wireframe |
 | Database | Local PostgreSQL now; hosted DB at deploy (Phase 5) |
 | Branding | Placeholder "Ajaia Docs" wordmark |
 

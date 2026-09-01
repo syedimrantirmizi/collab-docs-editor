@@ -17,6 +17,7 @@ Locked decisions from stakeholder review. Implementation must follow these unles
 | **Real-time collab** | Deferred — not in v1 |
 | **File import** | New document **and** import into current open document |
 | **Design** | Light mode, teal accent, card-based dashboard |
+| **Visual quality** | **Product-grade UI (MUST)** — beautiful, polished, shippable; not mock/wireframe (see `Design.md` §1.1) |
 | **Typography** | Sans UI (Inter) + serif editor body |
 | **Database** | Local PostgreSQL for now; production DB at deploy time |
 | **Branding** | Placeholder wordmark "Ajaia Docs" until assets provided |
@@ -76,12 +77,13 @@ Two entry points:
 
 ---
 
-## 5. Design — Light, teal, cards
+## 5. Design — Light, teal, cards, product-quality
 
 - **Light mode only** for MVP (dark mode → optional Phase 6).
 - **Primary accent:** teal `#0D9488` (see `Design.md`).
 - **Dashboard:** card grid/list — not table.
 - **Editor:** centered paper-style surface with sticky header + toolbar.
+- **Visual bar:** Every screen must look like a **real shipped product** — refined spacing, surfaces, hierarchy, empty states, and interactive polish. **Not** a developer mock or bare scaffold. See **`Design.md` §1.1** and Visual QA checklist §14.
 
 ---
 
@@ -134,5 +136,20 @@ Two entry points:
 - [x] Typography: sans UI + serif editor
 - [x] DB: local Postgres first
 - [x] Branding: placeholder
+- [x] **Visual quality:** product-grade UI, not mock/wireframe
 
-**Ready for Phase 0:** ✅ (pending explicit "start Phase 0" from stakeholder)
+---
+
+## 10. Visual quality — Product-grade UI (approved addendum)
+
+**Requirement:** The app must look **beautiful and production-ready**, not like a wireframe or internal mock.
+
+- Import **polished** shadcn blocks / UI patterns (not bare minimum components).
+- Apply full theming: surfaces, shadows, spacing, typography scale, hover/focus states.
+- Empty states, dashboard cards, editor shell, and dialogs must pass **`Design.md` §14 Visual QA** before a phase is marked done.
+
+**Approved:** September 2, 2026
+
+**Ready for Phase 1:** ✅ (Phase 0 complete; UI polish continues in each phase)
+
+---

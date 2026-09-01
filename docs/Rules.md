@@ -7,7 +7,8 @@ Rules for humans and AI assistants working on this codebase. Follow these during
 ## 1. Principles
 
 1. **Import-first, never scratch-build (MUST)** — Before writing code, crawl the web and import components, templates, and patterns from official docs, shadcn, TipTap examples, starter repos, and UI libraries. **Edit and wire** imports; do not greenfield UI, editor, auth, or boilerplate. See **`ImportFirst.md`** and log provenance in **`Sources.md`**.
-2. **Ship the core loop first** — create, edit, save, reopen before polish features.
+2. **Product-grade visuals (MUST)** — UI must look like a **real, shippable product**: polished blocks, proper surfaces/spacing/typography, complete empty states — **not** a mock or wireframe. See **`Design.md` §1.1** and §14.
+3. **Ship the core loop first** — create, edit, save, reopen before polish features.
 3. **Small, reviewable diffs** — one concern per PR/commit when possible.
 4. **Server-side authorization always** — never trust client-only permission checks.
 5. **Preserve editor JSON faithfully** — avoid round-trips that strip formatting.
@@ -44,6 +45,7 @@ Rules for humans and AI assistants working on this codebase. Follow these during
 - Validate file upload size (e.g. max 5MB) and extension allowlist.
 
 ### UX
+- **Product-quality UI** — import polished blocks; theme per `Design.md`; no mock-looking screens.
 - Show save state: Saving / Saved / Error.
 - Disable editor toolbar actions for VIEWER role.
 - List accepted import formats in UI and README.
@@ -75,6 +77,8 @@ Rules for humans and AI assistants working on this codebase. Follow these during
 | Real-time collab libs (Yjs, Liveblocks) | Deferred | Out of MVP scope |
 
 ### Anti-patterns
+- **No mock / wireframe UI** — bare cards, placeholder-only empty states, stock template copy, or unstyled layouts are not acceptable deliverables.
+- **No browser `alert`, `confirm`, or `prompt`** — use shadcn `Dialog` / in-app modals for user input and messages.
 - **No scratch-building** — custom login pages, toolbars, dashboards, editors, or layout systems when an import exists.
 - **No** implementing a feature before documenting candidate sources.
 - **No** client-only route protection without middleware/API checks.
@@ -184,6 +188,7 @@ When using AI (Cursor, Copilot, ChatGPT, etc.):
 
 - [ ] **Sources researched and logged in `Sources.md`**
 - [ ] **Implementation imported/adapted — not scratch-built** (except custom-only boundary)
+- [ ] **Visual QA passed** (`Design.md` §14) — looks like a real product, not a mock
 - [ ] Matches PRD acceptance criteria for that feature
 - [ ] Authorized correctly on server
 - [ ] Error states handled

@@ -2,14 +2,61 @@
 
 Visual and UX direction for the collaborative document editor. Professional, calm, and documentation-focused — inspired by modern productivity tools without copying Google Docs branding.
 
+> **Hard requirement:** The app must look like a **real, shippable product** — polished, cohesive, and visually refined. **Not** a wireframe, developer mock, or “placeholder UI.” Every screen should feel intentional enough to demo to stakeholders or reviewers.
+
 ---
 
 ## 1. Design Principles
 
-1. **Content first** — chrome stays minimal; editor is the hero.
-2. **Calm density** — readable spacing; not cramped like a spreadsheet, not airy like a marketing site.
-3. **Obvious ownership** — owned vs shared docs visually distinct at a glance.
-4. **Trust through state** — save status, errors, and permissions always visible.
+1. **Shippable product quality (MUST)** — UI must look beautiful and production-ready: refined spacing, hierarchy, surfaces, and micro-interactions. If a screen looks like a bare scaffold, it is not done.
+2. **Content first** — chrome stays minimal; editor is the hero.
+3. **Calm density** — readable spacing; not cramped like a spreadsheet, not airy like a marketing site.
+4. **Obvious ownership** — owned vs shared docs visually distinct at a glance.
+5. **Trust through state** — save status, errors, and permissions always visible.
+6. **Cohesion over novelty** — one visual language across login, dashboard, editor, dialogs, and empty states.
+
+---
+
+## 1.1 Product-quality bar (what “beautiful” means)
+
+Every screen must pass this checklist before the phase is complete:
+
+| Criterion | Required |
+|-----------|----------|
+| **Visual hierarchy** | Clear primary action, readable headings, muted secondary text |
+| **Surfaces** | Layered backgrounds (app bg → card/surface → elevated modals); subtle borders or shadows — not flat gray boxes |
+| **Spacing** | Consistent 4px grid; generous padding on cards and page sections |
+| **Typography** | Correct scale (display → body → caption); no default browser styling visible |
+| **Interactive states** | Hover, focus, active, disabled, and loading states on all controls |
+| **Empty states** | Helpful copy + primary CTA — not a single line of placeholder text |
+| **Polish** | Rounded corners, aligned icons, balanced button groups, no orphaned elements |
+| **Brand feel** | Teal accent used with restraint; app reads as “Ajaia Docs,” not generic shadcn demo |
+
+### What we avoid (mock / prototype look)
+
+- Plain unstyled lists or tables with no card treatment
+- Default HTML form appearance without shadcn/theming
+- Single-column pages with only text and one button
+- “Coming in Phase X” as the only empty-state content (use real empty-state patterns)
+- Inconsistent spacing, mixed font sizes, or misaligned toolbar icons
+- Harsh borders, pure `#ccc` grays, or zero elevation on main surfaces
+- Leaving stock block copy (“Acme Inc.”, “Login with Google”) in the product
+
+### What we aim for (product references)
+
+Think **Notion**, **Linear**, **Craft**, **Google Docs** (layout clarity, not branding copy): clean shell, confident whitespace, subtle depth, crisp actions. Import polished blocks from **shadcn blocks**, **21st.dev**, or similar — then adapt to Ajaia tokens; do not ship the unedited template.
+
+---
+
+## 1.2 Import-first + beautiful UI
+
+Per **`ImportFirst.md`**, components are imported — but imports must be **high-quality blocks**, not the minimum viable snippet:
+
+1. Search for dashboard, login, editor shell, and empty-state **blocks** that already look product-grade.
+2. Adapt colors, copy, and layout to `Design.md` — do not downgrade polish when wiring logic.
+3. Log block URLs in **`Sources.md`**.
+
+**Phase gate:** No screen ships with “mock” styling. Polish is part of Definition of Done, not a later pass.
 
 ---
 
@@ -119,16 +166,29 @@ Load via `next/font/google` for performance.
 
 ```
 ┌──────────────────────────────────────────────────────────┐
-│  Header: logo · doc title · save status · share · user   │
+│  Header: logo · doc title · save status · share · user   │  ← sticky, subtle border/shadow
 ├──────────────────────────────────────────────────────────┤
-│  Toolbar: B I U · H1 H2 · • 1.                           │
+│  Toolbar: B I U · H1 H2 · • 1.                           │  ← grouped controls, active states
 ├──────────────────────────────────────────────────────────┤
+│         soft page background (#FAFAFA)                   │
 │              ┌─────────────────────────┐                 │
-│              │   Editor surface        │                 │
-│              │   (white card, shadow)  │                 │
+│              │   Editor “paper”        │                 │  ← white, radius, soft shadow
+│              │   serif body, generous  │                 │
+│              │   padding               │                 │
 │              └─────────────────────────┘                 │
 └──────────────────────────────────────────────────────────┘
 ```
+
+### Elevation & depth (product surfaces)
+
+| Level | Treatment | Use |
+|-------|-----------|-----|
+| **Base** | `--background` `#FAFAFA` | App canvas |
+| **Surface** | `--card` white, `border` + `shadow-sm` | Document cards, login card, editor paper |
+| **Raised** | `shadow-md` + border | Dropdowns, popovers, share dialog |
+| **Sticky chrome** | white/`card` + bottom border or hairline shadow | Header, toolbar |
+
+Use subtle shadows — e.g. `0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)` — not heavy Material elevation.
 
 ---
 
@@ -187,23 +247,29 @@ Icon size: 16px toolbar, 20px nav actions.
 
 ## 9. Key Screens
 
+Each screen must feel **finished** — layout, copy, spacing, and CTAs aligned with a real SaaS product.
+
 ### Login
-- Centered card on `--background`
-- Product name + short tagline
-- Email/password fields
-- Hint: "Demo: alice@ajaia.test / password"
+- Full-viewport centered layout with subtle background (not a floating card on white void)
+- Product wordmark + short value prop above the form
+- shadcn **login-01** (or richer block) — refined card, proper field spacing
+- Single primary CTA; demo credentials as helper text — **no** fake OAuth / signup links
+- Optional: very subtle gradient or muted pattern on background (low contrast)
 
 ### Dashboard
-- Page title: "Documents"
-- Actions row: **New document** (primary), **Import** (secondary)
-- Section: **My documents** — grid or list of cards
-- Section: **Shared with me** — same card style + Shared badge
-- Empty state illustration text: "No documents yet. Create one or import a file."
+- App header with wordmark, user name, sign out — sticky, clean
+- Page hero: title + one-line description + action row (New document primary, Import secondary)
+- **My documents** / **Shared with me** as distinct sections with badges
+- Document cards: title, relative time, owner/shared badge, hover lift (`shadow-sm` → `shadow-md`, border highlight)
+- Empty states: icon or illustration area, headline, supporting sentence, **primary CTA button**
+- Skeleton loaders while fetching (Phase 2+) — never a blank flash
 
 ### Editor
-- Sticky header + toolbar
-- Read-only banner for Viewer role (amber subtle bar)
-- Editor card with soft shadow: `0 1px 3px rgba(0,0,0,0.08)`
+- Sticky header + toolbar with grouped formatting controls and clear active states
+- Editor “paper” centered on muted background — serif body, comfortable padding (min 48px vertical)
+- Save indicator integrated in header (Saved / Saving… with subtle color)
+- Read-only banner for Viewer role — amber subtle bar, not alert-red
+- Title editable inline in header — feels like a doc product, not a form field stuck on top
 
 ---
 
@@ -252,5 +318,17 @@ Approved September 2, 2026 (see **`Decisions.md`**):
 - [x] Teal accent `#0D9488`
 - [x] Serif editor / sans UI (Inter + Source Serif 4)
 - [x] Card-based dashboard
+- [x] **Product-quality visual bar** — must look like a real shipped product, not a mock (§1.1)
 
 **Sign-off:** Approved
+
+---
+
+## 14. Visual QA (before marking any phase done)
+
+- [ ] Screenshot looks presentable to a non-engineer stakeholder
+- [ ] No stock template copy or dead links remain
+- [ ] Primary actions obvious on every screen
+- [ ] Empty states include headline + CTA (where applicable)
+- [ ] Spacing and alignment checked at 1280px and 768px widths
+- [ ] Interactive states visible on buttons, cards, and toolbar toggles

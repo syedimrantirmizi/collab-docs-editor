@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: ajaia
+          POSTGRES_PASSWORD: ajaia
+          POSTGRES_DB: ajaia_docs
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ajaia -d ajaia_docs"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://ajaia:ajaia@localhost:5432/ajaia_docs
+      AUTH_SECRET: ci-test-auth-secret-replace-in-production
+      AUTH_URL: http://localhost:3000
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - run: npx prisma migrate deploy
+
+      - run: npm run db:seed
+
+      - run: npm run test
+
+      - run: npx playwright install --with-deps chromium
+
+      - run: npm run test:e2e
