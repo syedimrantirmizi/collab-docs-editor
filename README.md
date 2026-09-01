@@ -96,9 +96,7 @@ Full step-by-step: **[docs/DEPLOYMENT.md](./docs/DEPLOYMENT.md)**
 
 Recommended repo name: `collab-docs-editor`
 
-After deploy, add your live URL here:
-
-- **URL:** _(set after Vercel deploy)_
+- **URL:** [collab-docs-editor.vercel.app](https://collab-docs-editor.vercel.app)
 - **Repo:** [github.com/syedimrantirmizi/collab-docs-editor](https://github.com/syedimrantirmizi/collab-docs-editor)
 
 ## Scripts

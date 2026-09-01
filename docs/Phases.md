@@ -215,4 +215,22 @@ Stakeholder confirms:
 
 **Sign-off:** Stakeholder approved September 2, 2026
 
-**Next action:** Explicit go-ahead to begin **Phase 0** (web research → imports → scaffold)
+---
+
+## MVP delivery status
+
+**Status:** ✅ **Complete** — deployed to production September 2, 2026
+
+| Phase | Status |
+|-------|--------|
+| 0 Foundation | ✅ |
+| 1 Editor + CRUD | ✅ |
+| 2 Dashboard polish | ✅ |
+| 3 File import | ✅ |
+| 4 Sharing | ✅ |
+| 5 Tests + deploy | ✅ |
+
+**Production:** [collab-docs-editor.vercel.app](https://collab-docs-editor.vercel.app)  
+**Repository:** [github.com/syedimrantirmizi/collab-docs-editor](https://github.com/syedimrantirmizi/collab-docs-editor)
+
+**Next action (optional):** Stakeholder approval for **Phase 6** enhancements only — see below.

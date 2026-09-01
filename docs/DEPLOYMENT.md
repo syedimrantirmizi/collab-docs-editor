@@ -111,12 +111,12 @@ Demo accounts (same as local):
 
 ## 5. Post-deploy smoke test
 
-- [ ] `https://YOUR-PROJECT.vercel.app/login` loads
-- [ ] Login as Alice → dashboard
-- [ ] New document → type → “Saved” indicator
-- [ ] Import `.txt` from dashboard
-- [ ] Share with Bob → log in as Bob → doc under “Shared with me”
-- [ ] No console errors on happy path
+- [x] `https://collab-docs-editor.vercel.app/login` loads
+- [x] Login as Alice → dashboard
+- [x] New document → type → “Saved” indicator
+- [x] Import `.txt` from dashboard
+- [x] Share with Bob → log in as Bob → doc under “Shared with me”
+- [x] No console errors on happy path
 
 ---
 
@@ -171,6 +171,6 @@ Add your live URL to the root **`README.md`** under a **Production** section:
 ```markdown
 ## Production
 
-- **URL:** https://YOUR-PROJECT.vercel.app
-- **Repo:** https://github.com/YOUR_USER/collab-docs-editor
+- **URL:** https://collab-docs-editor.vercel.app
+- **Repo:** https://github.com/syedimrantirmizi/collab-docs-editor
 ```
